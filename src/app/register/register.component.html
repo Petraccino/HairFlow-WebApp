@@ -71,8 +71,8 @@
                 required
               >
                 <option value="">Scegli...</option>
-                <option value="3">Cliente</option>
-                <option value="2">Utente</option>
+                <option value=[grantUser]>Cliente</option>
+                <option value=[grantClient]>Utente</option>
               </select>
               <div class="invalid-feedback">Seleziona un valore valido.</div>
             </div>
@@ -122,7 +122,7 @@
 
           <hr class="my-4" />
 
-          <button class="w-100 btn btn-primary btn-lg" type="submit">
+          <button class="w-100 btn btn-primary btn-lg" (click)="register()">
             Continua la registrazione
           </button>
         </form>
