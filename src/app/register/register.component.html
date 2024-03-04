@@ -20,8 +20,12 @@
                 value=""
                 required
               />
-              <div class="invalid-feedback">Il nome è richiesto.</div>
+              <small
+                class="form-text text-muted"
+                *ngIf="firstName.errors && firstName.touched && firstName.dirty">Error format
+              </small>
             </div>
+
             <div class="col-4">
               <label for="lastName" class="form-label">Cognome</label>
               <input
@@ -36,14 +40,19 @@
                 value=""
                 required
               />
-              <div class="invalid-feedback">Il cognome è richiesto.</div>
+              <small
+                class="form-text text-muted"
+                *ngIf="lastName.errors && lastName.touched && lastName.dirty">Error format
+              </small>
             </div>
+
             <div class="col-2">
               <label for="gender" class="form-label">Sesso</label>
               <select
                 #gender="ngModel"
                 [(ngModel)]="genericUser.gender"
                 name="gender"
+                pattern="^[FM]$"
                 class="form-select"
                 id="gender"
                 required
@@ -52,7 +61,10 @@
                 <option>F</option>
                 <option>M</option>
               </select>
-              <div class="invalid-feedback">Seleziona un valore valido.</div>
+              <small
+                class="form-text text-muted"
+                *ngIf="gender.errors && gender.touched && gender.dirty">Error format
+              </small>
             </div>
 
             <div class="col-2">
@@ -61,6 +73,8 @@
                 #birthday="ngModel"
                 [(ngModel)]="genericUser.birthDay"
                 name="birthDay"
+                pattern="^\d{4}-\d{2}-\d{2}$"
+                [max]="maxDate"
                 type="date"
                 class="form-control"
                 id="birthDay"
@@ -79,7 +93,10 @@
                 id="email"
                 placeholder="you@example.com"
               />
-              <div class="invalid-feedback">Inserire una e-mail valida.</div>
+              <small
+                class="form-text text-muted"
+                *ngIf="email.errors && email.touched && email.dirty">Error format
+              </small>
             </div>
 
             <div class="col-2">
@@ -87,6 +104,7 @@
               <select
                 #grant="ngModel"
                 [(ngModel)]="genericUser.grant"
+                pattern="^[23]$"
                 class="form-select"
                 id="grant"
                 name="grantValue"
@@ -96,7 +114,10 @@
                 <option value="3">Cliente</option>
                 <option value="2">Utente</option>
               </select>
-              <div class="invalid-feedback">Seleziona un valore valido.</div>
+              <small
+                class="form-text text-muted"
+                *ngIf="grant.errors && grant.touched && grant.dirty">Error format
+              </small>
             </div>
 
             <div *ngIf="genericUser.grant == 2" class="col-sm-5">
@@ -111,25 +132,27 @@
                 id="fiscaldCode"
                 required
               />
-              <div class="invalid-feedback">
-                Inserire un codice fiscale corretto.
-              </div>
+              <small
+                class="form-text text-muted"
+                *ngIf="fiscalCode.errors && fiscalCode.touched && fiscalCode.dirty">Error format
+              </small>
             </div>
 
             <div class="col-5">
-              <label for="password" class="form-label"
-                >Password <span class="text-body-secondary"></span
-              ></label>
+              <label for="password" class="form-label">Password <span class="text-body-secondary"></span></label>
               <input
                 #password="ngModel"
                 [(ngModel)]="genericUser.password"
-                pattern="^[a-zA-Z0-9]{8,}$"
+                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                 name="password"
                 type="password"
                 class="form-control"
                 id="password"
               />
-              <div class="invalid-feedback">Inserire una password.</div>
+              <small
+                class="form-text text-muted"
+                *ngIf="password.errors && password.touched && password.dirty">Usa almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero e un carattere speciale
+              </small>
             </div>
 
             <div class="col-5">
@@ -138,13 +161,17 @@
                 #address="ngModel"
                 [(ngModel)]="genericUser.address"
                 name="address"
+                pattern = "^(?=.*[a-zA-Z]+\s[a-zA-Z]+(?:\s[a-zA-Z]+)*)(?=.*\d)[a-zA-Z0-9\s]+$"
                 type="text"
                 class="form-control"
                 id="address"
                 placeholder="Via/piazza esempio 99"
                 required
               />
-              <div class="invalid-feedback">Inserire un indirizzo valido.</div>
+              <small
+                class="form-text text-muted"
+                *ngIf="address.errors && address.touched && address.dirty">Error format
+              </small>
             </div>
 
             <div class="col-md-2">
@@ -153,13 +180,18 @@
               #province="ngModel"
               [(ngModel)]="genericUser.province"
               name="province"
+              pattern = "^.+$"
               class="form-select"
               id="province"
               required>
+              <!-- style="display:none" -->
                 <option value="">Scegli...</option>
                 <option *ngFor="let province of italianProvinces" [value]="province">{{ province }}</option>
               </select>
-              <div class="invalid-feedback">Seleziona una provincia.</div>
+              <small
+                class="form-text text-muted"
+                *ngIf="province.errors && province.touched && province.dirty">Error format
+              </small>
             </div>
 
             <div class="col-sm-5">
@@ -167,20 +199,33 @@
               <input
                 #phone="ngModel"
                 [(ngModel)]="genericUser.phone"
-                name="phone" 
+                name="phone"
+                pattern="[0-9+() ]{7,12}"
                 type="text"
                 class="form-control"
                 id="number"
                 required />
-              <div class="invalid-feedback">Inserire un numero valido.</div>
+                <small
+                class="form-text text-muted"
+                *ngIf="phone.errors && phone.touched && phone.dirty">Error format
+              </small>
             </div>
           </div>
 
           <hr class="my-4" />
 
-          <button class="w-100 btn btn-primary btn-lg" (click)="register()">
+          <button
+            class="w-100 btn btn-primary btn-lg"
+            (click)="register()"
+            [disabled]="form.invalid && form.submitted">
             Continua la registrazione
           </button>
+          <div class="mt-2 text-center">
+          <small 
+            *ngIf="form.submitted && form.invalid"
+            class="form-text text-danger">Il form non è valido. Controlla i campi
+          </small>
+        </div>
         </form>
       </div>
     </div>

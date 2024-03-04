@@ -32,14 +32,20 @@ export class RegisterComponent implements OnInit {
     'Verbano-Cusio-Ossola', 'Vercelli', 'Verona', 'Vibo Valentia', 'Vicenza', 'Viterbo'
   ];
   selectedProvince: string = '';
+  maxDate!: string;
 
   ngOnInit(): void {
     this.genericUser.gender = "";
     this.genericUser.grant = 0;
+    this.genericUser.province = "";
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = ('0' + (today.getMonth() + 1)).slice(-2);
+    const day = ('0' + today.getDate()).slice(-2);
+    this.maxDate = `${year}-${month}-${day}`;
   }
 
   constructor( private service: RegisterService){
-    console.log(this.__genericUser);
   }
 
   set genericUser(genericiUser: GenericUser){
@@ -49,7 +55,6 @@ export class RegisterComponent implements OnInit {
     return this.__genericUser;
   }
   
-
   register() {
     console.log(this.__genericUser)
     }
