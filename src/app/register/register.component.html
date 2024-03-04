@@ -4,11 +4,15 @@
     <hr class="my-4" />
     <div class="row g-5">
       <div class="col-md-12 col-lg-12">
-        <form class="needs-validation" novalidate>
+        <form #form="ngForm" class="needs-validation" novalidate>
           <div class="row g-3">
             <div class="col-4">
               <label for="firstName" class="form-label">Nome</label>
               <input
+                #firstName="ngModel"
+                [(ngModel)]="genericUser.firstName"
+                pattern="[a-zA-Z\s]*"
+                name="firstName"
                 type="text"
                 class="form-control"
                 id="firstName"
@@ -21,6 +25,10 @@
             <div class="col-4">
               <label for="lastName" class="form-label">Cognome</label>
               <input
+                #lastName="ngModel"
+                [(ngModel)]="genericUser.lastName"
+                pattern="[a-zA-Z\s]*"
+                name="lastName"
                 type="text"
                 class="form-control"
                 id="lastName"
@@ -30,10 +38,16 @@
               />
               <div class="invalid-feedback">Il cognome è richiesto.</div>
             </div>
-
             <div class="col-2">
-              <label for="sesso" class="form-label">Sesso</label>
-              <select class="form-select" id="sesso" required>
+              <label for="gender" class="form-label">Sesso</label>
+              <select
+                #gender="ngModel"
+                [(ngModel)]="genericUser.gender"
+                name="gender"
+                class="form-select"
+                id="gender"
+                required
+              >
                 <option value="">Scegli...</option>
                 <option>F</option>
                 <option>M</option>
@@ -42,17 +56,24 @@
             </div>
 
             <div class="col-2">
-              <label for="birthday" class="form-label"
-                >Data di nascita <span class="text-body-secondary"></span
-              ></label>
-              <input type="date" class="form-control" id="birthday" />
+              <label for="birthDay" class="form-label">Data di nascita <span class="text-body-secondary"></span></label>
+              <input
+                #birthday="ngModel"
+                [(ngModel)]="genericUser.birthDay"
+                name="birthDay"
+                type="date"
+                class="form-control"
+                id="birthDay"
+                />
             </div>
 
             <div class="col-5">
-              <label for="email" class="form-label"
-                >Email <span class="text-body-secondary"></span
-              ></label>
+              <label for="email" class="form-label">Email <span class="text-body-secondary"></span></label>
               <input
+                #email="ngModel"
+                [(ngModel)]="genericUser.email"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                name="email"
                 type="email"
                 class="form-control"
                 id="email"
@@ -62,27 +83,32 @@
             </div>
 
             <div class="col-2">
-              <label for="users" class="form-label">Utenza</label>
+              <label for="grant" class="form-label">Utenza</label>
               <select
+                #grant="ngModel"
+                [(ngModel)]="genericUser.grant"
                 class="form-select"
-                id="users"
-                [(ngModel)]="grantValue"
+                id="grant"
                 name="grantValue"
                 required
               >
-                <option value="">Scegli...</option>
-                <option value=[grantUser]>Cliente</option>
-                <option value=[grantClient]>Utente</option>
+                <option value="0">Scegli...</option>
+                <option value="3">Cliente</option>
+                <option value="2">Utente</option>
               </select>
               <div class="invalid-feedback">Seleziona un valore valido.</div>
             </div>
 
-            <div *ngIf="grantValue == 2" class="col-sm-5">
-              <label for="fiscaldcode" class="form-label">Codice Fiscale</label>
+            <div *ngIf="genericUser.grant == 2" class="col-sm-5">
+              <label for="fiscaldCode" class="form-label">Codice Fiscale</label>
               <input
+                #fiscalCode="ngModel"
+                [(ngModel)]="genericUser.fiscalCode"
+                pattern="[A-Za-z]{6}\d{2}[A-Za-z]\d{2}[A-Za-z]\d{3}[A-Za-z]"
+                name="fiscalCode"
                 type="text"
                 class="form-control"
-                id="fiscaldcode"
+                id="fiscaldCode"
                 required
               />
               <div class="invalid-feedback">
@@ -94,28 +120,58 @@
               <label for="password" class="form-label"
                 >Password <span class="text-body-secondary"></span
               ></label>
-              <input type="password" class="form-control" id="password" />
+              <input
+                #password="ngModel"
+                [(ngModel)]="genericUser.password"
+                pattern="^[a-zA-Z0-9]{8,}$"
+                name="password"
+                type="password"
+                class="form-control"
+                id="password"
+              />
               <div class="invalid-feedback">Inserire una password.</div>
             </div>
 
             <div class="col-5">
               <label for="address" class="form-label">Indirizzo</label>
-              <input type="text" class="form-control" id="address" required />
+              <input
+                #address="ngModel"
+                [(ngModel)]="genericUser.address"
+                name="address"
+                type="text"
+                class="form-control"
+                id="address"
+                placeholder="Via/piazza esempio 99"
+                required
+              />
               <div class="invalid-feedback">Inserire un indirizzo valido.</div>
             </div>
 
             <div class="col-md-2">
               <label for="province" class="form-label">Provincia</label>
-              <select class="form-select" id="province" required>
+              <select
+              #province="ngModel"
+              [(ngModel)]="genericUser.province"
+              name="province"
+              class="form-select"
+              id="province"
+              required>
                 <option value="">Scegli...</option>
-                <option>United States</option>
+                <option *ngFor="let province of italianProvinces" [value]="province">{{ province }}</option>
               </select>
               <div class="invalid-feedback">Seleziona una provincia.</div>
             </div>
 
             <div class="col-sm-5">
-              <label for="address" class="form-label">Numero</label>
-              <input type="text" class="form-control" id="number" required />
+              <label for="phone" class="form-label">Numero</label>
+              <input
+                #phone="ngModel"
+                [(ngModel)]="genericUser.phone"
+                name="phone" 
+                type="text"
+                class="form-control"
+                id="number"
+                required />
               <div class="invalid-feedback">Inserire un numero valido.</div>
             </div>
           </div>
