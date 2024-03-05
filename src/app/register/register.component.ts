@@ -1,8 +1,9 @@
-import { GenericUser } from './../model/GenericUser';
+import { GenericUser } from '../model/GenericUser';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { RegisterService } from '../service/register.service';
+import { RegisterService } from '../service/register/register.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -45,7 +46,7 @@ export class RegisterComponent implements OnInit {
     this.maxDate = `${year}-${month}-${day}`;
   }
 
-  constructor( private service: RegisterService){
+  constructor( private service: RegisterService, private router: Router){
   }
 
   set genericUser(genericiUser: GenericUser){
@@ -55,7 +56,12 @@ export class RegisterComponent implements OnInit {
     return this.__genericUser;
   }
   
-  register() {
-    console.log(this.__genericUser)
+  register(): void {
+   if(this.form.valid){
+      this.service.register(this.__genericUser).subscribe();
+    } else {
+      this.router.navigateByUrl('');
     }
+    }
+
 }
