@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { GenericUser } from '../../model/GenericUser';
-import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
-import { Utente } from '../../model/Utente'
-import { Cliente } from '../../model/Cliente';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { GenericUser } from "../../model/GenericUser";
+import { Observable, map } from "rxjs";
+import { Utente } from "../../model/Utente";
+import { environment } from "../../../environments/environment.development";
+import { Cliente } from "../../model/Cliente";
+
 
 @Injectable({
   providedIn: 'root'
