@@ -22,6 +22,4 @@ export class RegisterService {
       return this.http.post<Cliente>(environment.API_URL_REGISTER_CLIENT, __genericUser.toCliente())
       .pipe(map((resp) => resp));
     }
-
-  }
-}
+  }}

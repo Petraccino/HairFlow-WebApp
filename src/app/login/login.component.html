@@ -1,6 +1,6 @@
 <div class="container">
   <main class="form-signin w-100 m-auto">
-    <form class="needs-validation">
+    <form #form="ngForm" class="needs-validation" novalidate>
       <h2 class="text-center">Login</h2>
       <hr class="my-4" />
 
@@ -8,10 +8,13 @@
         <div class="col-5">
           <div class="form-floating">
             <input
+              #email = "ngModel"
+              [(ngModel)]="authRequest.email"
               type="email"
+              name="email"
               class="form-control"
               id="floatingInput"
-              placeholder="name@example.com"
+              required
             />
             <label for="floatingInput">Email address</label>
           </div>
@@ -20,10 +23,13 @@
         <div class="col-5">
           <div class="form-floating">
             <input
+              #password = "ngModel"
+              [(ngModel)]="authRequest.password"
               type="password"
+              name="password"
               class="form-control"
               id="floatingPassword"
-              placeholder="Password"
+              required
             />
             <label for="floatingPassword">Password</label>
           </div>
@@ -33,7 +39,14 @@
           <div class="text-center">Scegli la tipologia di utenza</div>
           <div class="col-2">
             <div class="form-group">
-              <select class="form-control" id="utenza">
+              <select
+                #gender="ngModel"
+                [(ngModel)]="authRequest.grant"
+                class="form-control"
+                id="grant"
+                name="grant"
+                required
+              >
                 <option value="3" class="text-center">Cliente</option>
                 <option value="2" class="text-center">Utente</option>
                 <option value="1" class="text-center">Admin</option>
@@ -43,7 +56,10 @@
         </div>
 
         <div class="col-2">
-          <button class="btn btn-primary w-100 py-2" type="submit">
+          <button
+            class="btn btn-primary w-100 py-2"
+            (click)="login()"
+            >
             Login
           </button>
         </div>
