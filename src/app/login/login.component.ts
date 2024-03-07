@@ -1,8 +1,9 @@
+import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthRequest } from '../model/AuthRequest';
 import { LoginService } from '../service/login/login.service';
-import { Router } from '@angular/router';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -14,17 +15,22 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   @ViewChild('form') form!: NgForm;
   private __authRequest: AuthRequest = new AuthRequest();
-  constructor(private service: LoginService, private router: Router){
-
-  }
+  constructor(
+    private service: LoginService,
+    private dialog: MatDialog
+  ) {}
   ngOnInit(): void {}
 
   login() {
-    if(this.form.valid){
+    if (this.form.valid) {
       this.service.login(this.__authRequest).subscribe();
-      
     } else {
-      this.router.navigateByUrl('');
+      this.dialog.open(DialogComponent, {
+        data: {
+          icon: 'Check',
+          message: 'This is the Alert Dialog',
+        },
+      });
     }
   }
 

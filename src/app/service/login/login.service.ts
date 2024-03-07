@@ -21,6 +21,8 @@ export class LoginService {
         .pipe(map((resp) => {
           if(resp.status == 200){
             this.authService.generateToken(authRequest).subscribe();
+          } else {
+            throw new Error("Credenziali non valide");
           }
         }));
     } else if (authRequest.grant == 2) {
@@ -29,6 +31,8 @@ export class LoginService {
         .pipe(map((resp) => {
           if(resp.status == 200){
             this.authService.generateToken(authRequest).subscribe();
+          } else {
+            throw new Error("Credenziali non valide");
           }
         }));
     } else {
@@ -37,6 +41,8 @@ export class LoginService {
         .pipe(map((resp) => {
           if(resp.status == 200){
             this.authService.generateToken(authRequest).subscribe();
+          } else {
+            throw new Error("Credenziali non valide");
           }
         }));
     }
